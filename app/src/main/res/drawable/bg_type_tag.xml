@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Color de fondo amarillo claro -->
+    <solid android:color="@color/yellow_tag"/>
+    <!-- Bordes redondeados en todos lados -->
+    <corners android:radius="16dp"/>
+    <!-- Margen interno para que el texto no toque los bordes -->
+    <padding android:left="16dp" android:right="16dp" android:top="4dp" android:bottom="4dp"/>
+</shape>

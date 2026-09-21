@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="yellow_pokedex">#FDE635</color>
+    <color name="white_card">#FFFFFF</color>
+    <color name="red_stats">#D32F2F</color>
+    <color name="gray_text">#4A4A4A</color>
+    <color name="yellow_tag">#FFF59D</color>
+</resources>

@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">MiPokedex_FigueroaRene</string>
+    <string name="pokemon_name">Pikachu</string>
+    <string name="pokemon_number">#025</string>
+    <string name="pokemon_type">Eléctrico</string>
+    <string name="stat_height_value">0,4m</string>
+    <string name="stat_weight_value">6,0kg</string>
+    <string name="stat_ability_value">Elec. Estática</string>
+    <string name="pokemon_description">Cuando se enfada, este Pokémon descarga la energía que almacena en el interior de las bolsas de las mejillas.</string>
+</resources>
