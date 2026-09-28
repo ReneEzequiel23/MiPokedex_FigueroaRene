@@ -61,32 +61,63 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun PokemonHeader(name:String, number:Int, fav:Boolean){
-    Row(Modifier.fillMaxWidth().padding(15.dp),
-        horizontalArrangement = Arrangement.SpaceBetween){
-        Column {
-            Text(name)
-            Text(
-                "${number}",
-                modifier = Modifier.align(Alignment.End)
-            )
-        }
-        Box(){
-            Image(
-                painter = painterResource(R.drawable.pokeball),
-                contentDescription = "Pokeball image",
-                contentScale = ContentScale.Fit,
-                modifier = Modifier.size(130.dp).offset(30.dp, 45.dp)
-            )
-            Image(
-                painter = painterResource(
-                    if(fav) R.drawable.star_filled else R.drawable.star_outline
-                ),
-                contentDescription =
-                    if(fav) "Yellow star filled" else "yellow star outlined",
+fun Greeting(modifier: Modifier = Modifier) {
+    val pokemon = pokemonList[3]
 
-                )
+    Box(
+        modifier = modifier
+            .fillMaxSize()
+            .background(ElectricYellow)
+    ) {
+        Image(
+            painter = painterResource(R.drawable.pokeball),
+            contentDescription = null,
+            contentScale = ContentScale.Fit,
+            modifier = Modifier
+                .size(250.dp)
+                .align(Alignment.TopEnd)
+                .offset(x = 50.dp, y = (-20).dp),
+            alpha = 0.15f)
+
+        Column(modifier = Modifier.fillMaxSize()) {
+            PokemonHeader(
+                pokemon.name,
+                pokemon.number,
+                pokemon.fav)
+
+            Spacer(modifier = Modifier.height(70.dp))
+
+            PokemonCard()
         }
+    }
+}
+
+@Composable
+fun PokemonHeader(name: String, number: Int, fav: Boolean) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(start = 32.dp, top = 32.dp, end = 32.dp),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.Top
+    ) {
+        Column {
+            Text(
+                text = name,
+                color = Color.White,
+                fontSize = 36.sp,
+                fontWeight = androidx.compose.ui.text.font.FontWeight.Bold
+            )
+            Text(
+                text = "#${number.toString().padStart(3, '0')}", // Formato #025
+                color = Color.DarkGray,
+                fontSize = 20.sp,
+                modifier = Modifier.align(Alignment.End))
+        }
+        Image(
+            painter = painterResource(if (fav) R.drawable.star_filled else R.drawable.star_outline), // Asegúrate de tener ic_star
+            contentDescription = "Favorito",
+            modifier = Modifier.size(40.dp))
     }
 }
 
@@ -105,28 +136,22 @@ fun PokemonCard() {
             modifier = Modifier
                 .offset(y = (-70).dp)
                 .size(170.dp)
-                .zIndex(2f)
-        )
+                .zIndex(2f))
 
         Card(
-            modifier = Modifier
-                .fillMaxSize(),
+            modifier = Modifier.fillMaxSize(),
             shape = RoundedCornerShape(
                 topStart = 40.dp,
-                topEnd = 40.dp
-            ),
+                topEnd = 40.dp),
             colors = CardDefaults.cardColors(
-                containerColor = Color.White
-            ),
-            elevation = CardDefaults.cardElevation(10.dp)
-        ) {
+                containerColor = Color.White),
+            elevation = CardDefaults.cardElevation(10.dp)) {
 
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(horizontal = 20.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
+                    .padding(horizontal = 32.dp),
+                horizontalAlignment = Alignment.CenterHorizontally) {
 
                 Spacer(modifier = Modifier.height(90.dp))
 
@@ -139,26 +164,13 @@ fun PokemonCard() {
 
                 Row(
                     modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceEvenly
+                    horizontalArrangement = Arrangement.SpaceBetween
                 ) {
-
-                    Ability(
-                        "column",
-                        "Altura",
-                        "${pokemon.height} m"
-                    )
-
-                    Ability(
-                        "column",
-                        "Peso",
-                        "${pokemon.weight} kg"
-                    )
-
-                    Ability(
-                        "column",
-                        "Habilidad",
-                        pokemon.ability
-                    )
+                    Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
+                        Ability("row", "Altura", "  ${pokemon.height} m")
+                        Ability("row", "Peso", "  ${pokemon.weight} kg")
+                    }
+                    Ability("column", "Habilidad", pokemon.ability)
                 }
 
                 Spacer(modifier = Modifier.height(35.dp))
@@ -210,28 +222,6 @@ fun PokemonCard() {
     }
 }
 
-@Composable
-fun Greeting(
-    modifier: Modifier = Modifier
-) {
-
-    val pokemon = pokemonList[3]
-
-    Column(
-        modifier = modifier
-            .fillMaxSize()
-            .background(ElectricYellow)
-    ) {
-
-        PokemonHeader(
-            pokemon.name,
-            pokemon.number,
-            pokemon.fav
-        )
-
-        PokemonCard()
-    }
-}
 
 @Preview(showBackground = true)
 @Composable

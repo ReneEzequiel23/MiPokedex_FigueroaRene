@@ -15,7 +15,8 @@ import rene.figueroa.composepokedex.ui.theme.ElectricYellow
 @Composable
 fun Chip(text:String, color: Color, modifier: Modifier= Modifier){
     Box(modifier.padding(5.dp,2.dp)
-        .background(color, RoundedCornerShape(10.dp))){
+        .background(color, RoundedCornerShape(10.dp))
+        .padding(horizontal = 16.dp, vertical = 4.dp)){
         Text(text)
     }
 }
