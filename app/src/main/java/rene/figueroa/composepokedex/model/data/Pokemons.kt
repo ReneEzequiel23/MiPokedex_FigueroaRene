@@ -21,13 +21,23 @@ fun showPokemonList(): List<Pokemon>{
 }
 
 val bulbasaur = Pokemon(
-    name = "Bulbasaur",
-    number = 1,
-    type = "Grass/Poison",
-    description = "There is a plant seed on its back from the day this Pokémon is born.",
-    height = 0.7f,
-    weight = 6.9f,
-    fav = false,
-    ability = "Overgrow",
-    image = R.drawable.raichu
+    "Bulbasaur",
+    1,
+    "Grass",
+    "There is a plant seed on its back from the day this Pokémon is born.",
+    0.7f,
+    6.9f,
+    true,
+    "Overgrow",
+    R.drawable.bulbasaur
 )
+
+fun getFavoritePokemons(): List<Pokemon>{
+    return pokemonList.filter {
+        it.favorite == true
+    }
+}
+
+fun getPokemonByNumber(id: Int): Pokemon{
+    return pokemonList.filter { it.number == id }.first()
+}

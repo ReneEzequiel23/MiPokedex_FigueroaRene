@@ -34,7 +34,7 @@ private val LightColorScheme = lightColorScheme(
 )
 
 @Composable
-fun ComposePokedexTheme(
+fun PokedexListTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     // Dynamic color is available on Android 12+
     dynamicColor: Boolean = true,
@@ -46,8 +46,8 @@ fun ComposePokedexTheme(
             if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
         }
 
-        darkTheme -> DarkColorScheme
-        else -> LightColorScheme
+        darkTheme -> rene.figueroa.composepokedex.ui.theme.DarkColorScheme
+        else -> rene.figueroa.composepokedex.ui.theme.LightColorScheme
     }
 
     MaterialTheme(

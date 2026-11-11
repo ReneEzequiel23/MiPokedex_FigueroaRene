@@ -1,14 +1,17 @@
 package rene.figueroa.composepokedex.navigation
-
 import kotlinx.serialization.Serializable
 
 @Serializable
-object PokemonList{
-
-}
-
+object Login
 
 @Serializable
-data class PokemonDetail(val pokemon: Int){
+object PokemonList
 
-}
+@Serializable
+data class PokemonDetail(val pokemon: Int)
+
+@Serializable
+object PokemonHunt
+
+@Serializable
+object Profile

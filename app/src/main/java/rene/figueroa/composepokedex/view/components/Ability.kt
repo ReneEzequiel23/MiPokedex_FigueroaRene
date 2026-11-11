@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import rene.figueroa.composepokedex.ui.theme.Red
 
 @Composable
 fun Ability(type:String, label:String, value: String){
@@ -22,6 +21,6 @@ fun Ability(type:String, label:String, value: String){
 }
 
 @Composable
-fun Label(text:String){
-    Text(text,color= Red)
+fun Label(label:String){
+    Text(label)
 }

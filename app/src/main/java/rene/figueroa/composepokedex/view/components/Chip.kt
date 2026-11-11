@@ -10,25 +10,29 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import rene.figueroa.composepokedex.utilities.getColorByType
 
 @Composable
-fun NumberChip(text: String, colors: Pair<Color, Color>, modifier: Modifier = Modifier) {
-    Row(
-        modifier = modifier
-            .size(30.dp)
-            .background(color = colors.first, shape = CircleShape)
-            .padding(5.dp),
+fun NumberChip(text: String, colors: Pair<Color, Color>, modifier:Modifier = Modifier){
+    Row(verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Center,
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Text(
-            text = text,
+        modifier = modifier
+            .padding(5.dp)
+            .background(colors.first, CircleShape)
+            .size(30.dp)){
+        Text(text,
             fontSize = 12.sp,
             fontFamily = FontFamily.SansSerif,
             fontWeight = FontWeight.Black,
-            color = colors.second
-        )
+            color = colors.second)
     }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun previewChip(){
+    NumberChip("000", getColorByType("grass"))
 }

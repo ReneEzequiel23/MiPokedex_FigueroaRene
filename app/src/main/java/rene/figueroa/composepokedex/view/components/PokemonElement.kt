@@ -1,164 +1,139 @@
 package rene.figueroa.composepokedex.view.components
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.*
-import androidx.compose.material3.MaterialTheme
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import rene.figueroa.composepokedex.model.data.bulbasaur
 import rene.figueroa.composepokedex.model.domain.Pokemon
-import androidx.compose.ui.tooling.preview.Preview
-import rene.figueroa.composepokedex.ui.theme.ComposePokedexTheme
-import rene.figueroa.composepokedex.R
-import rene.figueroa.composepokedex.utilities.getColorByType
-import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
-import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.graphics.RectangleShape
 import rene.figueroa.composepokedex.ui.theme.OffWhite
+import rene.figueroa.composepokedex.utilities.getColorByType
+import rene.figueroa.composepokedex.ui.theme.Typography
 
 @Composable
-fun PokemonRow(pokemon: Pokemon, onNavigateToDetail: (Int) -> Unit) {
+fun PokemonRow(pokemon: Pokemon, onNavigateToDetail: (id: Int) -> Unit = {}) {
     Row(
-        modifier = Modifier
+        Modifier
             .fillMaxWidth()
-            .clickable { onNavigateToDetail(pokemon.number) }
-            .padding(10.dp),
+            .padding(horizontal = 10.dp, vertical = 10.dp)
+            .clickable { onNavigateToDetail(pokemon.number as Int) },
         horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.Top
+        verticalAlignment = Alignment.CenterVertically
     ) {
         Image(
-            painter = painterResource(id = pokemon.image),
+            painterResource(pokemon.image),
             contentDescription = "${pokemon.name} image",
-            modifier = Modifier
+            Modifier
                 .width(80.dp)
                 .padding(10.dp)
         )
 
-        Column(
-            modifier = Modifier.fillMaxWidth(0.7f),
-            verticalArrangement = Arrangement.spacedBy(2.dp)
-        ) {
+        Column(Modifier.fillMaxWidth(.7f), verticalArrangement = Arrangement.spacedBy(2.dp)) {
+            Text(pokemon.name, style = Typography.labelLarge)
             Text(
-                text = pokemon.name,
-                style = MaterialTheme.typography.labelLarge
-            )
-            Text(
-                text = pokemon.description,
+                pokemon.description,
                 fontSize = 10.sp
             )
             Row(
-                modifier = Modifier.fillMaxWidth(0.85f),
+                Modifier.fillMaxWidth(0.85f),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                Text(text = "Height: ${pokemon.height}", style = MaterialTheme.typography.labelMedium)
-                Text(text = "Weight: ${pokemon.weight}", style = MaterialTheme.typography.labelMedium)
+                Text("Height: ${pokemon.height}", style = Typography.labelMedium)
+                Text("Weight: ${pokemon.weight}", style = Typography.labelMedium)
             }
         }
-
-        NumberChip(
-            text = pokemon.number.toString(),
-            colors = getColorByType(pokemon.type)
-        )
+        NumberChip("${pokemon.number}", getColorByType(pokemon.type), Modifier.align(Alignment.Top))
     }
 }
 
 @Composable
-fun FavoritePokemon(pokemon: Pokemon, onNavigateToDetail: (Int) -> Unit) {
+fun FavoritePokemon(pokemon: Pokemon, onNavigateToDetail: (id: Int) -> Unit = {}) {
     val colors = getColorByType(pokemon.type)
-
     Column(
-        modifier = Modifier
-            .clickable { onNavigateToDetail(pokemon.number) }
-            .padding(vertical = 15.dp),
+        Modifier
+            .width(150.dp)
+            .padding(vertical = 15.dp)
+            .clickable { onNavigateToDetail(pokemon.number as Int) },
         verticalArrangement = Arrangement.spacedBy(10.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Box(contentAlignment = Alignment.BottomEnd) {
+        Box {
             Box(
-                modifier = Modifier
-                    .padding(8.dp)
-                    .border(
-                        width = 5.dp,
-                        brush = Brush.sweepGradient(
-                            colors = listOf(
+                Modifier.border(
+                    BorderStroke(
+                        5.dp,
+                        Brush.sweepGradient(
+                            listOf(
                                 colors.first,
                                 OffWhite,
                                 colors.first,
                                 OffWhite,
                                 colors.first
                             )
-                        ),
-                        shape = RectangleShape
+                        )
                     )
+                )
             ) {
                 Image(
-                    painter = painterResource(id = pokemon.image),
+                    painterResource(pokemon.image),
                     contentDescription = "${pokemon.name} image",
-                    modifier = Modifier
+                    Modifier
                         .width(75.dp)
+                        .align(Alignment.Center)
                         .padding(5.dp)
                 )
             }
-            NumberChip(text = pokemon.number.toString(), colors = colors)
+            NumberChip("${pokemon.number}", colors, Modifier.align(Alignment.BottomEnd).offset(15.dp, 15.dp))
         }
-
-        Text(
-            text = pokemon.name,
-            style = MaterialTheme.typography.labelLarge
-        )
+        Text(pokemon.name, style = Typography.labelLarge)
     }
 }
 
 @Composable
-fun PokemonCell(pokemon: Pokemon, onNavigateToDetail: (Int) -> Unit) {
+fun PokemonCell(pokemon: Pokemon, onNavigateToDetail: (id: Int) -> Unit = {}) {
     val colors = getColorByType(pokemon.type)
 
     Column(
-        modifier = Modifier.clickable { onNavigateToDetail(pokemon.number) },
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier.clickable { onNavigateToDetail(pokemon.number as Int) }
     ) {
-        Box(contentAlignment = Alignment.TopEnd) {
+        Box {
             Image(
-                painter = painterResource(id = pokemon.image),
-                contentDescription = "${pokemon.name} image",
+                painter = painterResource(pokemon.image),
+                contentDescription = pokemon.name,
                 modifier = Modifier
                     .size(150.dp)
-                    .padding(10.dp)
+                    .padding(10.dp),
+                contentScale = ContentScale.Fit
             )
-            NumberChip(
-                text = pokemon.number.toString(),
-                colors = colors,
-                modifier = Modifier.padding(top = 10.dp, end = 10.dp)
-            )
+            NumberChip("${pokemon.number}", colors, Modifier.align(Alignment.TopEnd).offset(10.dp, -10.dp))
         }
-        Text(
-            text = pokemon.name,
-            style = MaterialTheme.typography.labelLarge
-        )
+        Text(text = pokemon.name, textAlign = TextAlign.Center, style = Typography.labelLarge)
     }
 }
 
 @Preview(showBackground = true)
 @Composable
-fun PokemonRowPreview() {
-    ComposePokedexTheme {
-        val dummyPokemon = Pokemon(
-            name = "Bulbasaur",
-            number = 1,
-            type = "Grass/Poison",
-            description = "There is a plant seed on its back from the day this Pokémon is born.",
-            height = 0.7f,
-            weight = 6.9f,
-            fav = false,
-            ability = "Overgrow",
-            image = R.drawable.pikachu
-        )
-
-        PokemonRow(pokemon = dummyPokemon, onNavigateToDetail = {})
-    }
+fun PokemonElementPreview() {
+    PokemonCell(bulbasaur)
 }

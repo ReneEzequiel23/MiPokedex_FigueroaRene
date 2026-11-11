@@ -20,8 +20,12 @@ class PokemonViewModel: ViewModel() {
         private set
 
     fun searchPokemon(){
+        gonePokemon = false
+        captured = false
         wildPokemon = pokemonList.random()
     }
+
+    var captured by mutableStateOf(false)
 
 
     fun capturePokemon(){
@@ -31,9 +35,11 @@ class PokemonViewModel: ViewModel() {
                 capturedPokemon = capturedPokemon + it
                 gonePokemon = false
                 wildPokemon = null
+                captured=true
             }else{
                 gonePokemon = true
                 wildPokemon = null
+                captured = false
             }
         }
     }
