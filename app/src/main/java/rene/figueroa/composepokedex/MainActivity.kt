@@ -15,8 +15,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.runtime.remember
 import rene.figueroa.composepokedex.model.data.CompanionPreferences
 import rene.figueroa.composepokedex.model.data.Users
+import rene.figueroa.composepokedex.model.data.sqllite.DatabaseHelper
+import rene.figueroa.composepokedex.model.data.sqllite.PokemonDAO
+import rene.figueroa.composepokedex.model.data.sqllite.PokemonSQLRepository
 import rene.figueroa.composepokedex.navigation.MyApp
 import rene.figueroa.composepokedex.ui.theme.PokedexListTheme
+import rene.figueroa.composepokedex.viewmodel.AddPokemonViewModel
 import rene.figueroa.composepokedex.viewmodel.PokemonDetailViewModel
 import rene.figueroa.composepokedex.viewmodel.UserViewModel
 
@@ -31,11 +35,15 @@ class MainActivity : ComponentActivity() {
                 val userViewModel = remember { UserViewModel(users, companionPreferences) }
                 val pokemonDetailViewModel = remember { PokemonDetailViewModel(companionPreferences) }
 
+                val databaseHelper = remember { DatabaseHelper(context.applicationContext) }
+                val pokemonRepository = remember { PokemonSQLRepository(PokemonDAO(databaseHelper)) }
+                val addPokemonViewModel = remember { AddPokemonViewModel(pokemonRepository) }
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     MyApp(
                         innerPadding = innerPadding,
                         userViewModel = userViewModel,
-                        pokemonDetailViewModel = pokemonDetailViewModel
+                        pokemonDetailViewModel = pokemonDetailViewModel,
+                        addPokemonViewModel = addPokemonViewModel
                     )
                 }
             }

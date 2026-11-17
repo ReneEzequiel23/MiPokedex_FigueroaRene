@@ -8,9 +8,11 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
 import rene.figueroa.composepokedex.screens.LoginScreen
 import rene.figueroa.composepokedex.screens.MenuPokedexScreen
+import rene.figueroa.composepokedex.view.menuPokedexScreen.AddPokemonScreen
 import rene.figueroa.composepokedex.view.menuPokedexScreen.PokemonDetailScreen
 import rene.figueroa.composepokedex.view.menuPokedexScreen.PokemonHuntScreen
 import rene.figueroa.composepokedex.view.screens.ProfileScreen
+import rene.figueroa.composepokedex.viewmodel.AddPokemonViewModel
 import rene.figueroa.composepokedex.viewmodel.PokemonDetailViewModel
 import rene.figueroa.composepokedex.viewmodel.UserViewModel
 
@@ -18,7 +20,8 @@ import rene.figueroa.composepokedex.viewmodel.UserViewModel
 fun MyApp(
     innerPadding: PaddingValues,
     userViewModel: UserViewModel,
-    pokemonDetailViewModel: PokemonDetailViewModel
+    pokemonDetailViewModel: PokemonDetailViewModel,
+    addPokemonViewModel: AddPokemonViewModel
 ) {
     val navController = rememberNavController()
 
@@ -49,7 +52,11 @@ fun MyApp(
                 },
                 onNavigateToProfile = {
                     navController.navigate(route = Profile)
-                }
+                },
+                onNavigateToAddPokemon = {
+                    navController.navigate(route = AddPokemon)
+                },
+                addPokemonViewModel = addPokemonViewModel
             )
         }
 
@@ -70,6 +77,13 @@ fun MyApp(
             ProfileScreen(
                 innerPadding = innerPadding,
                 userViewModel = userViewModel
+            )
+        }
+
+        composable<AddPokemon> {
+            AddPokemonScreen(
+                innerPadding = innerPadding,
+                addPokemonViewModel = addPokemonViewModel
             )
         }
     }
